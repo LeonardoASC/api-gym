@@ -21,13 +21,13 @@ class AdminUserSeeder extends Seeder
             ],
             [
                 'name' => 'Usuario',
-                'email' => 'User@user.com',
+                'email' => 'user@user.com',
                 'password' => bcrypt('123123123'),
             ],
         ];
 
-        foreach ($users as $userData) {
-            User::create($userData);
+        foreach ($users as $user) {
+            User::create($user);
         }
     }
 }

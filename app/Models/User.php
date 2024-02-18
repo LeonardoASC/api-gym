@@ -53,4 +53,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    public function physicalEvaluations()
+    {
+        return $this->hasMany(PhysicalEvaluation::class);
+    }
 }

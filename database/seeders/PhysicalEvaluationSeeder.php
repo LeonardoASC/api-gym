@@ -28,7 +28,7 @@ class PhysicalEvaluationSeeder extends Seeder
                 'user_email' => 'user@user.com',
                 'goals' => 'weight loss',
                 'weight' => 65.2,
-                'height' => 1.68,
+                'height' => 1.70,
                 'bmi' => null,
                 'evaluation_date' => '2024-02-18',
                 'evaluator_name' => 'Jane Smith',

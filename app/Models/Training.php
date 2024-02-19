@@ -9,4 +9,9 @@ class Training extends Model
 {
     use HasFactory;
     protected $fillable = ['amountExercises', 'typeExercises', 'resumeExercises'];
+
+     public function trainingExercises()
+    {
+        return $this->hasMany(TrainingExercise::class, 'train_id');
+    }
 }

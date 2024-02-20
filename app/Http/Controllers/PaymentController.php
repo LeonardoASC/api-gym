@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Training;
-use App\Http\Requests\StoreTrainingRequest;
-use App\Http\Requests\UpdateTrainingRequest;
+use App\Models\Payment;
+use App\Http\Requests\StorePaymentRequest;
+use App\Http\Requests\UpdatePaymentRequest;
 
-class TrainingController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Training::with('trainingExercises')->get();
+        return Payment::with('user')->get();
+        // return Training::with('trainingExercises')->get();
     }
 
     /**
@@ -27,7 +28,7 @@ class TrainingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTrainingRequest $request)
+    public function store(StorePaymentRequest $request)
     {
         //
     }
@@ -35,7 +36,7 @@ class TrainingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Training $training)
+    public function show(Payment $payment)
     {
         //
     }
@@ -43,7 +44,7 @@ class TrainingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Training $training)
+    public function edit(Payment $payment)
     {
         //
     }
@@ -51,7 +52,7 @@ class TrainingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTrainingRequest $request, Training $training)
+    public function update(UpdatePaymentRequest $request, Payment $payment)
     {
         //
     }
@@ -59,7 +60,7 @@ class TrainingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Training $training)
+    public function destroy(Payment $payment)
     {
         //
     }

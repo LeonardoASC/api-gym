@@ -13,7 +13,7 @@ class TrainingExerciseController extends Controller
      */
     public function index()
     {
-        return TrainingExercise::with('training')->get();;
+        return TrainingExercise::with('training')->get();
     }
 
     /**

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->float('value', 8, 2)->default(0);
-            $table->enum('status', ['aberto', 'pago'])->default('aberto');
+            $table->enum('status', ['Open', 'Paid'])->default('Open');
+            $table->enum('plan', ['Monthly ', 'Quarterly', 'Annual'])->default('Monthly');
             $table->dateTime('payday');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

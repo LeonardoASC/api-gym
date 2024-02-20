@@ -18,19 +18,22 @@ class PaymentSeeder extends Seeder
             [
                 'user_id' => 1,
                 'value' => 50.00,
-                'status' => 'pago',
+                'status' => 'Paid',
+                'plan' => 'Monthly',
                 'payday' => Carbon::now()->subDays(5), // Pagamento feito há 5 dias
             ],
             [
                 'user_id' => 2,
                 'value' => 30.00,
-                'status' => 'pago',
+                'status' => 'Paid',
+                'plan' => 'Monthly',
                 'payday' => Carbon::now()->subDays(1), // Pagamento aberto há 1 dias
             ],
             [
                 'user_id' => 2,
                 'value' => 40.00,
-                'status' => 'aberto',
+                'status' => 'Open',
+                'plan' => 'Monthly',
                 'payday' => Carbon::now()->subDays(31), // Pagamento aberto há 31 dias
             ],
         ];

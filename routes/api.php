@@ -30,3 +30,6 @@ Route::resource('physical-evaluations', App\Http\Controllers\PhysicalEvaluationC
 Route::resource('training-exercises', App\Http\Controllers\TrainingExerciseController::class);
 Route::resource('payments', App\Http\Controllers\PaymentController::class);
 Route::resource('frequences', App\Http\Controllers\FrequenceController::class);
+
+
+

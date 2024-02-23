@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('sets');
             $table->string('reps');
-            $table->integer('weight');
+            $table->integer('weight')->default(0);
             $table->string('image');
             $table->timestamps();
         });

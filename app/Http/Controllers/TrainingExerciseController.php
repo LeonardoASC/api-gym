@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TrainingExercise;
 use App\Http\Requests\StoreTrainingExerciseRequest;
 use App\Http\Requests\UpdateTrainingExerciseRequest;
+use Illuminate\Http\Request;
 
 class TrainingExerciseController extends Controller
 {
@@ -51,9 +52,27 @@ class TrainingExerciseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTrainingExerciseRequest $request, TrainingExercise $trainingExercise)
+    public function update(Request $request, $id)
     {
-        //
+        // Validate the request data
+        $this->validate($request, [
+            'weight' => 'required|numeric|min:0', // Ensure positive weight
+        ]);
+
+        // Find the exercise
+        $exercise = TrainingExercise::findOrFail($id);
+
+        // Update the weight
+        $exercise->weight = $request->weight;
+
+        // Save the changes
+        $exercise->save();
+
+        // Return a successful response with the updated data
+        return response()->json([
+            'message' => 'Exercise weight updated successfully!',
+            'data' => $exercise,
+        ], 200);
     }
 
     /**

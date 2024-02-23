@@ -11,7 +11,7 @@ class StorePaymentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StorePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'value' => 'required|numeric|min:0',
+            'status' => 'required|in:Open,Paid',
+            'plan' => 'required|in:Monthly,Quarterly,Annual',
+            'payday' => 'required|date',
         ];
     }
 }

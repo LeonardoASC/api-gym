@@ -30,8 +30,26 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request)
     {
-        //
+        // Validação dos dados do pagamento
+        $validatedData = $request->validated();
+
+        // Criação de um novo pagamento
+        $payment = new Payment();
+        $payment->user_id = $validatedData['user_id'];
+        $payment->value = $validatedData['value'];
+        $payment->status = $validatedData['status'];
+        $payment->plan = $validatedData['plan'];
+        $payment->payday = $validatedData['payday'];
+        $payment->save();
+
+        // Retorna uma resposta JSON indicando o sucesso e os dados do pagamento
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment created successfully!',
+            'payment' => $payment
+        ], 201);
     }
+
 
     /**
      * Display the specified resource.

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -11,6 +12,15 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed',
+        ]);
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -23,18 +33,26 @@ class AuthController extends Controller
     }
     
     
-    
     public function login(Request $request)
     {
-        $credentials = $request->all('email', 'password');
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
 
-        if(!$token = auth()->attempt($credentials)){
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }else{
-            return $this->respondWithToken($token, $request);
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
         }
 
+        $credentials = $request->only('email', 'password');
+    
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Login ou senha invalidos'], 401);
+        }
+    
+        return $this->respondWithToken($token, $request);
     }
+    
 
     public function getAuthUser(Request $request){
         return response()->json(auth()->user());

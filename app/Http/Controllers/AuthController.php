@@ -17,22 +17,25 @@ class AuthController extends Controller
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed',
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        
+
+        $role = $request->route()->uri() === 'api/register' ? 'user' : 'admin';
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'role' => $role,
         ]);
 
         $token = auth()->login($user);
-        
+
         return $this->respondWithToken($token);
     }
-    
-    
+
+
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -45,14 +48,14 @@ class AuthController extends Controller
         }
 
         $credentials = $request->only('email', 'password');
-    
+
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Login ou senha invalidos'], 401);
         }
-    
+
         return $this->respondWithToken($token, $request);
     }
-    
+
 
     public function getAuthUser(Request $request){
         return response()->json(auth()->user());

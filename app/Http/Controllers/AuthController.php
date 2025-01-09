@@ -16,18 +16,18 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed',
+            'role' => 'required|string|in:user,admin',
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-
-        $role = $request->route()->uri() === 'api/register' ? 'user' : 'admin';
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => $role,
+            'role' => $request->role,
         ]);
 
         $token = auth()->login($user);

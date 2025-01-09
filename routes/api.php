@@ -24,6 +24,7 @@ Route::resource('users', App\Http\Controllers\UserController::class);
 Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('admregister', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
+// Route::post('admlogin', [App\Http\Controllers\AuthController::class, 'login']);
 Route::get('logout', [App\Http\Controllers\AuthController::class, 'logout']);
 Route::get('user', [App\Http\Controllers\AuthController::class, 'getAuthUser']);
 

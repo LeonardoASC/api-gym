@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Gym;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -29,6 +30,14 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
+
+        
+        if ($user->role === 'admin') {
+            Gym::create([
+                'user_id' => $user->id,
+                'status' => 'disabled',
+            ]);
+        }
 
         $token = auth()->login($user);
 

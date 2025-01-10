@@ -9,6 +9,7 @@ class Gym extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'name',
         'cnpj',
         'phone',
@@ -18,7 +19,7 @@ class Gym extends Model
         'zip_code',
         'logo',
         'status',
-        'user_id'
+        'is_complete',
     ];
     public function admin()
     {

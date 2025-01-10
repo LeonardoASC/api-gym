@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('gyms', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name')->nullable();
             $table->string('cnpj')->nullable();
             $table->string('phone')->nullable();
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->string('zip_code')->nullable();
             $table->string('logo')->nullable();
             $table->string('status')->default('disabled');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->boolean('is_complete')->default(false);
             $table->timestamps();
         });
     }

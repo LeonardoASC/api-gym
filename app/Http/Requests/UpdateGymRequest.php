@@ -11,7 +11,7 @@ class UpdateGymRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateGymRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'cnpj' => 'required|string|max:20',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string',
+            'zip_code' => 'required|string|max:10',
+            'logo' => 'required|string|max:255',
         ];
     }
 }

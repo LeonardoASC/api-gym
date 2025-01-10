@@ -26,5 +26,22 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function getGymIsComplete($id)
+    {
+        $user = User::findOrFail($id);
+        $gym = $user->gyms()->first();
+
+        if (!$gym) {
+            return response()->json([
+                'message' => 'Nenhum ginásio associado a este usuário.',
+                'is_complete' => null,
+            ], 404);
+        }
+        return response()->json([
+            'message' => 'Status do ginásio recuperado com sucesso.',
+            'is_complete' => $gym->is_complete,
+        ]);
+    }
+
 
 }

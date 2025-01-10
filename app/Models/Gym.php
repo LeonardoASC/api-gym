@@ -8,4 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Gym extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'cnpj',
+        'phone',
+        'address',
+        'city',
+        'state',
+        'zip_code',
+        'logo',
+        'status',
+        'user_id'
+    ];
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'user_id'); // Administrador da academia
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'gym_id'); // Usuários da academia
+    }
 }

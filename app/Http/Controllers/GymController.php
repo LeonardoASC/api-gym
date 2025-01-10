@@ -63,4 +63,11 @@ class GymController extends Controller
     {
         //
     }
+
+    public function getGymsWithUsers()
+    {
+        //retorna a academia e os usuarios associados
+        $gyms = Gym::with('users')->get();
+        return response()->json($gyms);
+    }
 }

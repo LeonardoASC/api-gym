@@ -15,4 +15,11 @@ class UserController extends Controller
         return User::all();
     }
 
+    public function getUsersWithGym()
+    {
+        //retorna o usuario e as academias associadas 
+        $users = User::with('gym')->get();
+        return response()->json($users);
+    }
+
 }

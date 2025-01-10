@@ -25,8 +25,8 @@ class Gym extends Model
         return $this->belongsTo(User::class, 'user_id'); // Administrador da academia
     }
 
-    public function users()
+    public function user()
     {
-        return $this->hasMany(User::class, 'gym_id'); // Usuários da academia
+        return $this->belongsTo(User::class);
     }
 }

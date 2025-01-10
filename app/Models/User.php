@@ -58,7 +58,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function gym()
     {
-        return $this->belongsTo(Gym::class); // Associação com a academia do usuário
+        return $this->hasOne(Gym::class);
     }
 
     public function gyms()

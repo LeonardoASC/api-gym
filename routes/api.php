@@ -19,8 +19,11 @@ Route::post('register', [App\Http\Controllers\AuthController::class, 'register']
 Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::get('logout', [App\Http\Controllers\AuthController::class, 'logout']);
 Route::get('user', [App\Http\Controllers\AuthController::class, 'getAuthUser']);
-Route::get('/users-with-gyms', [App\Http\Controllers\UserController::class, 'getUsersWithGym']);
-Route::get('/gyms-with-users', [App\Http\Controllers\GymController::class, 'getGymsWithUsers']);
+
+Route::get('/gyms/email/{email}', [App\Http\Controllers\GymController::class, 'getGymByEmail']);
+Route::get('/users/email/{email}', [App\Http\Controllers\UserController::class, 'getUserByEmail']);
+
+
 
 Route::resource('trainings', App\Http\Controllers\TrainingController::class);
 Route::resource('physical-evaluations', App\Http\Controllers\PhysicalEvaluationController::class);

@@ -15,11 +15,16 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function getUsersWithGym()
+    public function getUserByEmail($email)
     {
-        //retorna o usuario e as academias associadas 
-        $users = User::with('gym')->get();
-        return response()->json($users);
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        return response()->json($user);
     }
+
 
 }

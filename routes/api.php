@@ -24,7 +24,7 @@ Route::get('/gyms/email/{email}', [App\Http\Controllers\GymController::class, 'g
 Route::get('/users/email/{email}', [App\Http\Controllers\UserController::class, 'getUserByEmail']);
 Route::put('/gyms/{id}', [App\Http\Controllers\GymController::class, 'updateGymRegister']);
 Route::get('/users/{id}/gym-is-complete', [App\Http\Controllers\UserController::class, 'getGymIsComplete']);
-
+Route::get('/users/{id}/gym', [App\Http\Controllers\UserController::class, 'getGymByUserId']);
 
 
 Route::resource('trainings', App\Http\Controllers\TrainingController::class);

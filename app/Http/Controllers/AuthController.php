@@ -75,14 +75,32 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out sucess']);
     }
 
+    // protected function respondWithToken($token)
+    // {
+    //     return response()->json([
+    //         'access_token' => $token,
+    //         'token_type' => 'bearer',
+    //         'expires_in' => auth()->factory()->getTTL() * 60,
+    //         'userInfo' => auth()->user(),
+    //     ]);
+    // }
+
     protected function respondWithToken($token)
     {
+        $user = auth()->user()->load('gym'); 
+    
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'userInfo' => auth()->user(),
+            'userInfo' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'email_verified_at' => $user->email_verified_at,
+                'role' => $user->role,
+                'gym' => $user->gym, 
+            ]
         ]);
     }
-
 }

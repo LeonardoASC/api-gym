@@ -43,5 +43,16 @@ class UserController extends Controller
         ]);
     }
 
+    // função que recebe id do usuario e retorna o ginásio com user_id associado a ele
+    public function getGymByUserId($id)
+    {
+        $user = User::findOrFail($id);
+        $gym = $user->gyms()->first();
 
+        if (!$gym) {
+            return response()->json(['message' => 'Gym not found'], 404);
+        }
+
+        return response()->json($gym);
+    }
 }

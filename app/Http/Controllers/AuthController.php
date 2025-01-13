@@ -31,7 +31,7 @@ class AuthController extends Controller
             'role' => $request->role,
         ]);
 
-        
+
         if ($user->role === 'admin') {
             Gym::create([
                 'user_id' => $user->id,
@@ -87,8 +87,8 @@ class AuthController extends Controller
 
     protected function respondWithToken($token)
     {
-        $user = auth()->user()->load('gym'); 
-    
+        $user = auth()->user()->load('gym');
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
@@ -99,7 +99,8 @@ class AuthController extends Controller
                 'email' => $user->email,
                 'email_verified_at' => $user->email_verified_at,
                 'role' => $user->role,
-                'gym' => $user->gym, 
+                'gym_id' => $user->gym_id,
+                'gym' => $user->gym,
             ]
         ]);
     }

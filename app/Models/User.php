@@ -74,4 +74,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Payment::class, 'user_id', 'id');
     }
+// relacionamento com o modelo de Nutrition
+    public function nutritions()
+    {
+        return $this->hasMany(Nutrition::class);
+    }
+   
 }

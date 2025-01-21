@@ -13,8 +13,19 @@ class NutritionController extends Controller
      */
     public function index()
     {
-        //
+        \Log::info('Token recebido no backend:', ['Authorization' => request()->header('Authorization')]);
+    
+        $user = auth()->user();
+        if (!$user) {
+            \Log::error('Usuário não autenticado.', ['token' => request()->header('Authorization')]);
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+    
+        \Log::info('Usuário autenticado:', ['id' => $user->id, 'name' => $user->name]);
+    
+        return Nutrition::where('user_id', $user->id)->get();
     }
+    
 
     /**
      * Show the form for creating a new resource.

@@ -20,4 +20,9 @@ class Nutrition extends Model
         'servingSize',
         'image',
     ];
+    // relacionamento com user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

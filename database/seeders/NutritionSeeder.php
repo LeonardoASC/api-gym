@@ -14,6 +14,6 @@ class NutritionSeeder extends Seeder
     public function run(): void
     {
         // criar seeder e factory
-        Nutrition::factory(20)->create();
+        Nutrition::factory(10)->create();
     }
 }

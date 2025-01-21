@@ -13,19 +13,15 @@ class NutritionController extends Controller
      */
     public function index()
     {
-        \Log::info('Token recebido no backend:', ['Authorization' => request()->header('Authorization')]);
-    
+
         $user = auth()->user();
         if (!$user) {
-            \Log::error('Usuário não autenticado.', ['token' => request()->header('Authorization')]);
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-    
-        \Log::info('Usuário autenticado:', ['id' => $user->id, 'name' => $user->name]);
-    
+
         return Nutrition::where('user_id', $user->id)->get();
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -40,7 +36,22 @@ class NutritionController extends Controller
      */
     public function store(StoreNutritionRequest $request)
     {
-        //
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('nutritions', 'public');
+        }
+        // faça o resto do codigo
+        $data['user_id'] = $user->id;
+        $nutrition = Nutrition::create($data);
+
+
+        return response()->json($nutrition, 201);
     }
 
     /**
@@ -62,9 +73,21 @@ class NutritionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNutritionRequest $request, Nutrition $nutrition)
+    public function update(Request $request, $id)
     {
-        //
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $nutrition = Nutrition::find($id);
+        if (!$nutrition || $nutrition->user_id != $user->id) {
+            return response()->json(['error' => 'Not Found'], 404);
+        }
+
+        $nutrition->update($request->all());
+
+        return response()->json($nutrition);
     }
 
     /**

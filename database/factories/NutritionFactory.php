@@ -20,6 +20,7 @@ class NutritionFactory extends Factory
             'user_id' => $this->faker->numberBetween(1, 4), // ID do usuário
             'name' => $this->faker->words(3, true), // Nome da receita com 3 palavras
             'description' => $this->faker->sentence, // Frase curta como descrição
+            'recommendedTime' => $this->faker->numberBetween(0, 23) . ':00',
             'ingredients' => $this->faker->words(5, true), // Lista curta de ingredientes
             'prepTime' => $this->faker->numberBetween(5, 60) . ' minutes', // Tempo de preparo em minutos
             'mealType' => $this->faker->randomElement(['Breakfast', 'Lunch', 'Dinner', 'Snack']), // Tipo de refeição

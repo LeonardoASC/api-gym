@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Nutrition extends Model
 {
     use HasFactory;
-    protected $filable = [
+    protected $table = 'nutritions';
+    protected $fillable = [
+        'user_id',
         'name',
         'description',
+        'recommendedTime',
         'ingredients',
         'prepTime',
         'mealType',

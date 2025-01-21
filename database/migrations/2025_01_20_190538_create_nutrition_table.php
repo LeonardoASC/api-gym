@@ -11,20 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nutrition', function (Blueprint $table) {
+        Schema::create('nutritions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
-            $table->string('description');
-            $table->string('ingredients');
-            $table->string('prepTime');
+            $table->string('description')->nullable();
+            $table->string('recommendedTime');
+            $table->string('ingredients')->nullable();
+            $table->string('prepTime')->nullable();
             $table->string('mealType');
-            $table->string('recipe');
-            $table->string('difficulty');
-            $table->string('benefits');
-            $table->string('servingSize');
-            $table->string('image');
+            $table->string('recipe')->nullable();
+            $table->string('difficulty')->nullable();
+            $table->string('benefits')->nullable();
+            $table->string('servingSize')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
 
         });
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nutrition');
+        Schema::dropIfExists('nutritions');
     }
 };

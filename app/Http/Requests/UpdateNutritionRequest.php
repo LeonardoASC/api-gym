@@ -11,7 +11,7 @@ class UpdateNutritionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class UpdateNutritionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'string',
+            'description' => 'string',
+            'recommendedTime' => 'string',
+            'ingredients' => 'string',
+            'prepTime' => 'string',
+            'mealType' => 'string',
+            'recipe' => 'string',
+            'difficulty' => 'string',
+            'benefits' => 'string',
+            'servingSize' => 'string',
+            'image' => 'file|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Nutrition;
 use App\Http\Requests\StoreNutritionRequest;
 use App\Http\Requests\UpdateNutritionRequest;
+use Illuminate\Support\Facades\Storage;
 
 class NutritionController extends Controller
 {
@@ -44,7 +45,8 @@ class NutritionController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('nutritions', 'public');
+            $path = $request->file('image')->store('nutritions', 'public');
+            $data['image'] = url("storage/{$path}");
         }
         // faça o resto do codigo
         $data['user_id'] = $user->id;
@@ -73,21 +75,33 @@ class NutritionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(UpdateNutritionRequest $request, Nutrition $nutrition)
     {
+
         $user = auth()->user();
+
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $nutrition = Nutrition::find($id);
-        if (!$nutrition || $nutrition->user_id != $user->id) {
-            return response()->json(['error' => 'Not Found'], 404);
+        // Verifica se o usuário é dono do recurso
+        if ($nutrition->user_id !== $user->id) {
+            return response()->json(['error' => 'Forbidden'], 403);
         }
 
-        $nutrition->update($request->all());
+        $data = $request->validated();
 
-        return response()->json($nutrition);
+        if ($request->hasFile('image')) {
+            // Remove a imagem antiga, se existir
+            if ($nutrition->image) {
+                Storage::disk('public')->delete($nutrition->image);
+            }
+            $data['image'] = $request->file('image')->store('nutritions', 'public');
+        }
+
+        $nutrition->update($data);
+
+        return response()->json($nutrition, 200);
     }
 
     /**

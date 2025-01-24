@@ -22,16 +22,16 @@ class StoreNutritionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'recommendedTime' => 'required|string',
-            'ingredients' => 'required|string',
-            'prepTime' => 'required|string',
-            'mealType' => 'required|string',
-            'recipe' => 'required|string',
-            'difficulty' => 'required|string',
-            'benefits' => 'required|string',
-            'servingSize' => 'required|string',
+            'name' => 'required|string|min:3|max:100|alpha',
+            'description' => 'nullable|string|max:255',
+            'recommendedTime' => 'required|string|min:1|max:50|alpha_num',
+            'ingredients' => 'required|string|min:3|max:500',
+            'prepTime' => 'required|string|min:1|max:50',
+            'mealType' => 'required|string|min:3|max:50|alpha',
+            'recipe' => 'nullable|string|max:1000',
+            'difficulty' => 'required|string|min:3|max:50|alpha',
+            'benefits' => 'nullable|string|max:500',
+            'servingSize' => 'required|string|min:1|max:50',
             'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ];
     }

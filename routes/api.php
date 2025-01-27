@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('users', App\Http\Controllers\UserController::class);
-Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
-Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
-Route::get('logout', [App\Http\Controllers\AuthController::class, 'logout']);
-Route::get('user', [App\Http\Controllers\AuthController::class, 'getAuthUser']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::get('logout', [AuthController::class, 'logout']);
+Route::get('user', [AuthController::class, 'getAuthUser']);
 Route::get('/gyms/email/{email}', [App\Http\Controllers\GymController::class, 'getGymByEmail']);
 Route::get('/users/email/{email}', [App\Http\Controllers\UserController::class, 'getUserByEmail']);
 

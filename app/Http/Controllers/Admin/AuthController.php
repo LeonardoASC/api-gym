@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Gym;
@@ -75,33 +76,12 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out sucess']);
     }
 
-    // protected function respondWithToken($token)
-    // {
-    //     return response()->json([
-    //         'access_token' => $token,
-    //         'token_type' => 'bearer',
-    //         'expires_in' => auth()->factory()->getTTL() * 60,
-    //         'userInfo' => auth()->user(),
-    //     ]);
-    // }
 
     protected function respondWithToken($token)
     {
-        $user = auth()->user()->load('gym');
-
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'userInfo' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'email_verified_at' => $user->email_verified_at,
-                'role' => $user->role,
-                'gym_id' => $user->gym_id,
-                'gym' => $user->gym,
-            ]
+            'user' => auth()->user()->only(['id', 'name', 'email', 'phone', 'role'])
         ]);
     }
 }

@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentSeeder::class);
         $this->call(FrequenceSeeder::class);
         $this->call(NutritionSeeder::class);
+        $this->call(TrainingLogSeeder::class);
     }
 }

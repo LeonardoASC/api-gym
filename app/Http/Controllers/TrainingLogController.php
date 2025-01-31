@@ -29,7 +29,17 @@ class TrainingLogController extends Controller
      */
     public function store(StoreTrainingLogRequest $request)
     {
-        //
+        // Validate the request data
+        $validated = $request->validated();
+    
+        // Create a new TrainingLog instance with the validated data
+        $trainingLog = TrainingLog::create($validated);
+    
+        // Return a response indicating success
+        return response()->json([
+            'message' => 'Training log created successfully',
+            'data' => $trainingLog
+        ], 201);
     }
 
     /**

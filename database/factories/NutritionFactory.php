@@ -24,7 +24,7 @@ class NutritionFactory extends Factory
             'ingredients' => $this->faker->words(5, true), // Lista curta de ingredientes
             'prepTime' => $this->faker->numberBetween(5, 60) . ' minutes', // Tempo de preparo em minutos
             'mealType' => $this->faker->randomElement(['Breakfast', 'Lunch', 'Dinner', 'Snack']), // Tipo de refeição
-            'recipe' => $this->faker->paragraph, // Descrição detalhada da receita
+            'recipe' => $this->faker->words(10, true), 
             'difficulty' => $this->faker->randomElement(['Easy', 'Medium', 'Hard']), // Nível de dificuldade
             'benefits' => $this->faker->sentence, // Frase curta descrevendo os benefícios
             'servingSize' => $this->faker->randomDigitNotNull . ' servings', // Porções

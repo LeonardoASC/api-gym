@@ -13,11 +13,11 @@ class TrainingSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['user_id' => 2,'amountExercises' => 6, 'typeExercises' => 'A', 'resumeExercises' => 'Stretching/Leg'],
-            ['user_id' => 2,'amountExercises' => 7, 'typeExercises' => 'B', 'resumeExercises' => 'Stretching/Back/Trapezius'],
-            ['user_id' => 2,'amountExercises' => 8, 'typeExercises' => 'C', 'resumeExercises' => 'Stretching/Biceps/Triceps'],
-            ['user_id' => 2,'amountExercises' => 9, 'typeExercises' => 'D', 'resumeExercises' => 'Stretching/Glutes/Calf/Leg'],
-            ['user_id' => 2,'amountExercises' => 9, 'typeExercises' => 'E', 'resumeExercises' => 'Stretching/Shoulder/Chest'],
+            ['user_id' => 2,'typeExercises' => 'A', 'resumeExercises' => 'Stretching/Leg', 'image' => 'https://via.placeholder.com/150'],
+            ['user_id' => 2,'typeExercises' => 'B', 'resumeExercises' => 'Stretching/Back/Trapezius', 'image' => 'https://via.placeholder.com/150'],
+            ['user_id' => 2,'typeExercises' => 'C', 'resumeExercises' => 'Stretching/Biceps/Triceps', 'image' => 'https://via.placeholder.com/150'],
+            ['user_id' => 2,'typeExercises' => 'D', 'resumeExercises' => 'Stretching/Glutes/Calf/Leg', 'image' => 'https://via.placeholder.com/150'],
+            ['user_id' => 2,'typeExercises' => 'E', 'resumeExercises' => 'Stretching/Shoulder/Chest', 'image' => 'https://via.placeholder.com/150'],
         ];
 
         foreach ($data as $trainingData) {

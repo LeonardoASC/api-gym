@@ -11,7 +11,7 @@ class StoreTrainingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreTrainingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'amountExercises' => 'nullable|max:50',
+            'typeExercises' => 'required|max:50',
+            'resumeExercises' => 'required|max:50'
         ];
     }
 }

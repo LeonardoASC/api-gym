@@ -13,7 +13,17 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        return Training::with('trainingExercises')->get();
+        $user = auth()->user();
+        if(!$user){
+            return response()->json([
+                'message' => 'Usuário não autenticado'
+            ], 401);
+        }
+        if ($user->role === 'admin') {
+            return Training::with('trainingExercises')->get();
+        }
+        return Training::where('user_id', $user->id)->with('trainingExercises')->get();
+
     }
 
     /**
@@ -29,7 +39,14 @@ class TrainingController extends Controller
      */
     public function store(StoreTrainingRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $training = Training::create($validated);
+
+        // Retorne a resposta que desejar; por exemplo, JSON:
+        return response()->json([
+            'message' => 'Treino criado com sucesso!',
+            'data' => $training
+        ], 201);
     }
 
     /**

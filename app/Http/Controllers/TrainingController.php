@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Training;
 use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
+use Illuminate\Support\Facades\Storage;
+
 
 class TrainingController extends Controller
 {
@@ -81,7 +83,29 @@ class TrainingController extends Controller
      */
     public function update(UpdateTrainingRequest $request, Training $training)
     {
-        //
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Verifica se o usuário é dono do recurso
+        if ($training->user_id !== $user->id) {
+            return response()->json(['error' => 'Forbidden'], 403);
+        }
+
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            if ($training->image) {
+                Storage::disk('public')->delete($training->image);
+            }
+            $data['image'] = $request->file('image')->store('trainings', 'public');
+        }
+
+        $training->update($data);
+
+        return response()->json($training, 200);
     }
 
     /**
@@ -89,6 +113,16 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-        //
+        if(!$training){
+            return response()->json([
+                'message' => 'Treino não encontrado!'
+            ], 404);
+        }
+
+        $training->delete();
+
+        return response()->json([
+            'message' => 'Treino excluído com sucesso!'
+        ], 200);
     }
 }

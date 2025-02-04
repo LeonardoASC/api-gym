@@ -11,7 +11,7 @@ class UpdateTrainingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateTrainingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'typeExercises' => 'required|min:3|max:50',
+            'resumeExercises' => 'required|min:3|max:50',
+            'image' => 'image|max:2048',
         ];
     }
 }

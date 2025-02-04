@@ -46,7 +46,8 @@ class NutritionController extends Controller
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('nutritions', 'public');
-            $data['image'] = url("storage/{$path}");
+            // $data['image'] = url("storage/{$path}");
+            $data['image'] = $path;
         }
         // faça o resto do codigo
         $data['user_id'] = $user->id;

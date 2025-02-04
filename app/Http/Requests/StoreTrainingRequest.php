@@ -22,7 +22,7 @@ class StoreTrainingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amountExercises' => 'nullable|max:50',
+            'user_id' => 'required|exists:users,id',
             'typeExercises' => 'required|max:50',
             'resumeExercises' => 'required|max:50'
         ];

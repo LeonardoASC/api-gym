@@ -39,10 +39,21 @@ class TrainingController extends Controller
      */
     public function store(StoreTrainingRequest $request)
     {
-        $validated = $request->validated();
-        $training = Training::create($validated);
+        $user = auth()->user();
 
-        // Retorne a resposta que desejar; por exemplo, JSON:
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        // $validated = $request->validated();
+        // $training = Training::create($validated);
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('trainings', 'public');
+            // $data['image'] = url("storage/{$path}");
+            $data['image'] = $path;
+        }
+        $data['user_id'] = $user->id;
+        $training = Training::create($data);
         return response()->json([
             'message' => 'Treino criado com sucesso!',
             'data' => $training

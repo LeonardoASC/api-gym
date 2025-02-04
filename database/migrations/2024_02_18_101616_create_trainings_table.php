@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('typeExercises');
             $table->string('resumeExercises');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

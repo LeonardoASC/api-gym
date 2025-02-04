@@ -23,8 +23,8 @@ class StoreTrainingRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'typeExercises' => 'required|max:50',
-            'resumeExercises' => 'required|max:50'
+            'typeExercises' => 'required|min:3|max:50',
+            'resumeExercises' => 'required|min:3|max:50'
         ];
     }
 }

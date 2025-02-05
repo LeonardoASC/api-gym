@@ -13,7 +13,16 @@ class TrainingLogController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        if(!$user){
+            return response()->json([
+                'message' => 'Usuário não autenticado'
+            ], 401);
+        }
+        if ($user->role === 'admin') {
+            return TrainingLog::all();
+        }
+        return TrainingLog::where('user_id', $user->id)->get();
     }
 
     /**
@@ -31,10 +40,10 @@ class TrainingLogController extends Controller
     {
         // Validate the request data
         $validated = $request->validated();
-    
+
         // Create a new TrainingLog instance with the validated data
         $trainingLog = TrainingLog::create($validated);
-    
+
         // Return a response indicating success
         return response()->json([
             'message' => 'Training log created successfully',

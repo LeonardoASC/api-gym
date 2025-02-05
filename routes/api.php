@@ -29,6 +29,7 @@ Route::get('/users/{id}/gym', [App\Http\Controllers\UserController::class, 'getG
 
 
 Route::resource('trainings', App\Http\Controllers\TrainingController::class);
+Route::resource('training-logs', App\Http\Controllers\TrainingLogController::class);
 Route::resource('physical-evaluations', App\Http\Controllers\PhysicalEvaluationController::class);
 Route::resource('training-exercises', App\Http\Controllers\TrainingExerciseController::class);
 Route::resource('payments', App\Http\Controllers\PaymentController::class);

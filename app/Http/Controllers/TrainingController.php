@@ -6,6 +6,8 @@ use App\Models\Training;
 use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+
 
 
 class TrainingController extends Controller
@@ -39,28 +41,82 @@ class TrainingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTrainingRequest $request)
+    // public function store(StoreTrainingRequest $request)
+    // {
+    //     $user = auth()->user();
+
+    //     if (!$user) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+    //     $data = $request->validated();
+    //     if ($request->hasFile('image')) {
+    //         $path = $request->file('image')->store('trainings', 'public');
+    //         $data['image'] = $path;
+    //     }
+
+    //     $data['user_id'] = $user->id;
+    //     $training = Training::create($data);
+
+    //     return response()->json([
+    //         'message' => 'Treino criado com sucesso!',
+    //         'data' => $training
+    //     ], 201);
+    // }
+
+    public function store(Request $request)
     {
         $user = auth()->user();
-
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        // $validated = $request->validated();
-        // $training = Training::create($validated);
-        $data = $request->validated();
+    
+        // Aqui você faz a validação conforme precisar
+        // (Pode usar um FormRequest ou validator manual)
+        $data = $request->all();
+    
+        // Se tiver imagem do Training
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('trainings', 'public');
-            // $data['image'] = url("storage/{$path}");
             $data['image'] = $path;
         }
+    
+        // Define o user_id
         $data['user_id'] = $user->id;
+    
+        // 1) Criar o registro principal em 'trainings'
         $training = Training::create($data);
+    
+        // 2) Se veio um array "training_exercises" ou "exercises" do front,
+        //    iteramos e criamos cada registro em 'training_exercises'
+        if (!empty($data['training_exercises'])) {
+            // Ajuste o nome conforme seu front envia (ex: "exercises" ou "training_exercises")
+    
+            $exercisesData = [];
+            foreach ($data['training_exercises'] as $exercise) {
+                // Se tiver imagem própria de cada exercício
+                if (isset($exercise['image']) && $exercise['image'] instanceof \Illuminate\Http\UploadedFile) {
+                    $exerciseImagePath = $exercise['image']->store('training_exercises', 'public');
+                    $exercise['image'] = $exerciseImagePath;
+                }
+                // Setar FK
+                $exercise['training_id'] = $training->id;
+    
+                $exercisesData[] = $exercise;
+            }
+    
+            // Criar vários de uma vez
+            $training->trainingExercises()->createMany($exercisesData);
+        }
+    
         return response()->json([
             'message' => 'Treino criado com sucesso!',
-            'data' => $training
+            'data'    => $training->load('trainingExercises') 
+            // se quiser retornar junto os exercícios criados
         ], 201);
     }
+    
+    
+
 
     /**
      * Display the specified resource.
@@ -95,7 +151,7 @@ class TrainingController extends Controller
         }
 
         $data = $request->validated();
-        
+
         //removendo a imagem existente
         if ($request->has('removeImage')) {
             if ($training->image) {

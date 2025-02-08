@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('sets');
             $table->string('reps');
             $table->integer('weight')->default(0);
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -22,9 +22,9 @@ class StoreTrainingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'typeExercises' => 'required|min:3|max:50',
-            'resumeExercises' => 'required|min:3|max:50'
+            'typeExercises' => 'required|min:1|max:50',
+            'resumeExercises' => 'required|min:1|max:50',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }

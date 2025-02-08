@@ -95,6 +95,14 @@ class TrainingController extends Controller
         }
 
         $data = $request->validated();
+        
+        //removendo a imagem existente
+        if ($request->has('removeImage')) {
+            if ($training->image) {
+                Storage::disk('public')->delete($training->image);
+            }
+            $data['image'] = null;
+        }
 
         if ($request->hasFile('image')) {
             if ($training->image) {

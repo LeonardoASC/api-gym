@@ -22,9 +22,9 @@ class UpdateTrainingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'typeExercises' => 'required|min:3|max:50',
-            'resumeExercises' => 'required|min:3|max:50',
-            'image' => 'file|mimes:jpeg,png,jpg|max:2048',
+            'typeExercises' => 'required|min:1|max:50',
+            'resumeExercises' => 'required|min:1|max:50',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }

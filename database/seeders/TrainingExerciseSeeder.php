@@ -15,7 +15,7 @@ class TrainingExerciseSeeder extends Seeder
     {
         $exercises = [
             [
-                'train_id' => 1,
+                'training_id' => 1,
                 'name' => 'Bench Press',
                 'sets' => 3,
                 'reps' => '8-10',
@@ -23,7 +23,7 @@ class TrainingExerciseSeeder extends Seeder
                 'image' => 'https://www.elhombre.com.br/wp-content/uploads/2022/08/image.png',
             ],
             [
-                'train_id' => 1,
+                'training_id' => 1,
                 'name' => 'Squats',
                 'sets' => 4,
                 'reps' => '10-12',
@@ -31,7 +31,7 @@ class TrainingExerciseSeeder extends Seeder
                 'image' => 'https://i.pinimg.com/736x/a7/e6/20/a7e6209d4ca7fdbb2f44e565bc93910b.jpg',
             ],
             [
-                'train_id' => 2,
+                'training_id' => 2,
                 'name' => 'Deadlift',
                 'sets' => 3,
                 'reps' => '8-10',
@@ -39,7 +39,7 @@ class TrainingExerciseSeeder extends Seeder
                 'image' => 'https://upload.wikimedia.org/wikipedia/commons/5/59/Crossover-with-bands-2.png',
             ],
             [
-                'train_id' => 2,
+                'training_id' => 2,
                 'name' => 'Pull-ups',
                 'sets' => 3,
                 'reps' => '8-10',
@@ -47,7 +47,7 @@ class TrainingExerciseSeeder extends Seeder
                 'image' => 'https://i.pinimg.com/474x/48/20/1c/48201cb5f7e13121054517991e129199.jpg',
             ],
             [
-                'train_id' => 3,
+                'training_id' => 3,
                 'name' => 'Underhand Pull-downs',
                 'sets' => 3,
                 'reps' => '8-10',
@@ -55,7 +55,7 @@ class TrainingExerciseSeeder extends Seeder
                 'image' => 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Underhand-pull-downs-2.png',
             ],
             [
-                'train_id' => 3,
+                'training_id' => 3,
                 'name' => 'Dumbbell Bicep Curl',
                 'sets' => 3,
                 'reps' => '8-10',

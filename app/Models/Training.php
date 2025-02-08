@@ -12,6 +12,6 @@ class Training extends Model
 
      public function trainingExercises()
     {
-        return $this->hasMany(TrainingExercise::class, 'train_id');
+        return $this->hasMany(TrainingExercise::class, 'training_id');
     }
 }

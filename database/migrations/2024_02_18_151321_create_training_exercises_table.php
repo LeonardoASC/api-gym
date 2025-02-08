@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('training_exercises', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('train_id');
-            $table->foreign('train_id')->references('id')->on('trainings')->onDelete('cascade');
+            $table->unsignedBigInteger('training_id');
+            $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
             $table->string('name');
             $table->integer('sets');
             $table->string('reps');

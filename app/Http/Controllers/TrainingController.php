@@ -69,53 +69,38 @@ class TrainingController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-    
-        // Aqui você faz a validação conforme precisar
-        // (Pode usar um FormRequest ou validator manual)
+
         $data = $request->all();
-    
-        // Se tiver imagem do Training
+
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('trainings', 'public');
             $data['image'] = $path;
         }
-    
-        // Define o user_id
+
         $data['user_id'] = $user->id;
-    
-        // 1) Criar o registro principal em 'trainings'
+
         $training = Training::create($data);
-    
-        // 2) Se veio um array "training_exercises" ou "exercises" do front,
-        //    iteramos e criamos cada registro em 'training_exercises'
+
         if (!empty($data['training_exercises'])) {
-            // Ajuste o nome conforme seu front envia (ex: "exercises" ou "training_exercises")
-    
             $exercisesData = [];
             foreach ($data['training_exercises'] as $exercise) {
-                // Se tiver imagem própria de cada exercício
                 if (isset($exercise['image']) && $exercise['image'] instanceof \Illuminate\Http\UploadedFile) {
                     $exerciseImagePath = $exercise['image']->store('training_exercises', 'public');
                     $exercise['image'] = $exerciseImagePath;
                 }
-                // Setar FK
                 $exercise['training_id'] = $training->id;
-    
                 $exercisesData[] = $exercise;
             }
-    
-            // Criar vários de uma vez
             $training->trainingExercises()->createMany($exercisesData);
         }
-    
+
         return response()->json([
             'message' => 'Treino criado com sucesso!',
-            'data'    => $training->load('trainingExercises') 
-            // se quiser retornar junto os exercícios criados
+            'data'    => $training->load('trainingExercises')
         ], 201);
     }
-    
-    
+
+
 
 
     /**

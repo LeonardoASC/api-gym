@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TrainingExercise;
+use App\Models\Training;
 use App\Http\Requests\StoreTrainingExerciseRequest;
 use App\Http\Requests\UpdateTrainingExerciseRequest;
 use Illuminate\Http\Request;
@@ -28,10 +29,58 @@ class TrainingExerciseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(StoreTrainingExerciseRequest $request)
+    // {
+    //     $user = auth()->user();
+    //     if (!$user) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+    //     $data = $request->validated();
+    //     $training = Training::findOrFail($data['training_id']);
+    //     $exercisesData = [];
+    //     foreach ($data['exercises'] as $exercise) {
+    //         // Se há imagem, subir para storage
+    //         if (!empty($exercise['image']) && $exercise['image'] instanceof \Illuminate\Http\UploadedFile) {
+    //             $exercise['image'] = $exercise['image']->store('training_exercises', 'public');
+    //         }
+    //         $exercise['training_id'] = $training->id;
+    //         $exercisesData[] = $exercise;
+    //     }
+    //     $training->trainingExercises()->createMany($exercisesData);
+    //     $training->load('trainingExercises');
+    //     return response()->json([
+    //         'message' => 'Exercises created successfully!',
+    //         'data' => $training,
+    //     ], 201);
+
+    // }
     public function store(StoreTrainingExerciseRequest $request)
     {
-        //
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $data = $request->validated();
+
+        $training = Training::findOrFail($data['training_id']);
+        $exercisesData = [];
+        foreach ($data['exercises'] as $exercise) {
+            if (!empty($exercise['image']) && $exercise['image'] instanceof \Illuminate\Http\UploadedFile) {
+                $exercise['image'] = $exercise['image']->store('training_exercises', 'public');
+            }
+            $exercise['training_id'] = $training->id;
+            $exercisesData[] = $exercise;
+        }
+
+        $createdExercises = $training->trainingExercises()->createMany($exercisesData);
+
+        return response()->json([
+            'message' => 'Exercises created successfully!',
+            'data'    => $createdExercises,
+        ], 201);
     }
+
 
     /**
      * Display the specified resource.

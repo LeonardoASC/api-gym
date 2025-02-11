@@ -6,6 +6,7 @@ use App\Models\TrainingExercise;
 use App\Models\Training;
 use App\Http\Requests\StoreTrainingExerciseRequest;
 use App\Http\Requests\UpdateTrainingExerciseRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class TrainingExerciseController extends Controller
@@ -101,27 +102,61 @@ class TrainingExerciseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    // public function update(Request $request, $id)
+    // {
+    //     // Validate the request data
+    //     $this->validate($request, [
+    //         'weight' => 'required|numeric|min:0', // Ensure positive weight
+    //     ]);
+
+    //     // Find the exercise
+    //     $exercise = TrainingExercise::findOrFail($id);
+
+    //     // Update the weight
+    //     $exercise->weight = $request->weight;
+
+    //     // Save the changes
+    //     $exercise->save();
+
+    //     // Return a successful response with the updated data
+    //     return response()->json([
+    //         'message' => 'Exercise weight updated successfully!',
+    //         'data' => $exercise,
+    //     ], 200);
+    // }
+
+    public function update(UpdateTrainingExerciseRequest $request, TrainingExercise $trainingExercise)
     {
-        // Validate the request data
-        $this->validate($request, [
-            'weight' => 'required|numeric|min:0', // Ensure positive weight
-        ]);
+        $user = auth()->user();
 
-        // Find the exercise
-        $exercise = TrainingExercise::findOrFail($id);
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
-        // Update the weight
-        $exercise->weight = $request->weight;
+        if ($trainingExercise->training->user_id !== $user->id) {
+            return response()->json(['error' => 'Forbidden'], 403);
+        }
 
-        // Save the changes
-        $exercise->save();
+        $data = $request->validated();
 
-        // Return a successful response with the updated data
-        return response()->json([
-            'message' => 'Exercise weight updated successfully!',
-            'data' => $exercise,
-        ], 200);
+        //removendo a imagem existente
+        if ($request->has('removeImage')) {
+            if ($trainingExercise->image) {
+                Storage::disk('public')->delete($trainingExercise->image);
+            }
+            $data['image'] = null;
+        }
+
+        if ($request->hasFile('image')) {
+            if ($trainingExercise->image) {
+                Storage::disk('public')->delete($trainingExercise->image);
+            }
+            $data['image'] = $request->file('image')->store('trainingExercises', 'public');
+        }
+
+        $trainingExercise->update($data);
+
+        return response()->json($trainingExercise, 200);
     }
 
     /**

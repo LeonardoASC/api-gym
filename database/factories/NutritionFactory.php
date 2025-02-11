@@ -28,7 +28,7 @@ class NutritionFactory extends Factory
             'difficulty' => $this->faker->randomElement(['Easy', 'Medium', 'Hard']), // Nível de dificuldade
             'benefits' => $this->faker->sentence, // Frase curta descrevendo os benefícios
             'servingSize' => $this->faker->randomDigitNotNull . ' servings', // Porções
-            'image' => $this->faker->imageUrl(640, 480, 'food', true), // URL de imagem
+            'image' => '', 
         ];
     }
 }

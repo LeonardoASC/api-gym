@@ -11,7 +11,7 @@ class UpdateTrainingExerciseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateTrainingExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'sets' => 'required|numeric',
+            'reps' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'image' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
         ];
     }
 }

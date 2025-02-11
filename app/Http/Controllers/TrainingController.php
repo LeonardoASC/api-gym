@@ -72,6 +72,19 @@ class TrainingController extends Controller
 
         $data = $request->all();
 
+        // validação do data
+        $request->validate([
+            'typeExercises' => 'required|string|max:255',
+            'resumeExercises' => 'required|string',
+            'image' => 'nullable|image',
+            'training_exercises' => 'nullable|array',
+            'training_exercises.*.name' => 'required|string|max:255',
+            'training_exercises.*.sets' => 'required|integer',
+            'training_exercises.*.reps' => 'required|string|max:255',
+            'training_exercises.*.weight' => 'nullable|integer',
+            'training_exercises.*.image' => 'nullable|image'
+        ]);
+
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('trainings', 'public');
             $data['image'] = $path;

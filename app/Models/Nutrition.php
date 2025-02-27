@@ -11,16 +11,16 @@ class Nutrition extends Model
     protected $table = 'nutritions';
     protected $fillable = [
         'user_id',
-        'name',
+        'mealName',
         'description',
-        'recommendedTime',
+        'mealTime',
         'ingredients',
         'prepTime',
         'mealType',
         'recipe',
         'difficulty',
         'benefits',
-        'servingSize',
+        'portionSize',
         'image',
     ];
     // relacionamento com user

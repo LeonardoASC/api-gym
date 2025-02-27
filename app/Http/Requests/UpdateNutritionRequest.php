@@ -22,16 +22,16 @@ class UpdateNutritionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string',
+            'mealName' => 'string',
             'description' => 'string',
-            'recommendedTime' => 'string',
+            'mealTime' => 'string',
             'ingredients' => 'string',
             'prepTime' => 'string',
             'mealType' => 'string',
             'recipe' => 'string',
             'difficulty' => 'string',
             'benefits' => 'string',
-            'servingSize' => 'string',
+            'portionSize' => 'string',
             'image' => 'file|mimes:jpeg,png,jpg|max:2048',
         ];
     }

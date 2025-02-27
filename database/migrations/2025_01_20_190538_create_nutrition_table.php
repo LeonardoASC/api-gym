@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('name');
+            $table->string('mealName');
             $table->string('description')->nullable();
-            $table->string('recommendedTime');
+            $table->string('mealTime')->nullable();
             $table->string('ingredients')->nullable();
             $table->string('prepTime')->nullable();
-            $table->string('mealType');
+            $table->string('mealType')->nullable();
             $table->string('recipe')->nullable();
             $table->string('difficulty')->nullable();
             $table->string('benefits')->nullable();
-            $table->string('servingSize')->nullable();
+            $table->string('portionSize')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
 

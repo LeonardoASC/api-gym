@@ -42,6 +42,18 @@ class NutritionController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        logger()->info('Request keys', array_keys($request->all()));
+
+logger()->info('Has file? ' . ($request->hasFile('image') ? 'sim' : 'não'));
+
+if ($request->hasFile('image')) {
+    logger()->info('=== Info da imagem ===', [
+        'mimeType'  => $request->file('image')->getMimeType(),
+        'extension' => $request->file('image')->extension(),
+        'size'      => $request->file('image')->getSize(),
+    ]);
+}
+
         $data = $request->validated();
 
         if ($request->hasFile('image')) {

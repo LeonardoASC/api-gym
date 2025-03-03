@@ -42,26 +42,13 @@ class NutritionController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        logger()->info('Request keys', array_keys($request->all()));
-
-logger()->info('Has file? ' . ($request->hasFile('image') ? 'sim' : 'não'));
-
-if ($request->hasFile('image')) {
-    logger()->info('=== Info da imagem ===', [
-        'mimeType'  => $request->file('image')->getMimeType(),
-        'extension' => $request->file('image')->extension(),
-        'size'      => $request->file('image')->getSize(),
-    ]);
-}
 
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('nutritions', 'public');
-            // $data['image'] = url("storage/{$path}");
             $data['image'] = $path;
         }
-        // faça o resto do codigo
         $data['user_id'] = $user->id;
         $nutrition = Nutrition::create($data);
 
@@ -103,7 +90,6 @@ if ($request->hasFile('image')) {
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            // Remove a imagem antiga, se existir
             if ($nutrition->image) {
                 Storage::disk('public')->delete($nutrition->image);
             }

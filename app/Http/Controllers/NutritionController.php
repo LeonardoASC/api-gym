@@ -122,6 +122,28 @@ if ($request->hasFile('image')) {
      */
     public function destroy(Nutrition $nutrition)
     {
-        //
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        if ($nutrition->user_id !== $user->id) {
+            return response()->json(['error' => 'Forbidden'], 403);
+        }
+
+        if(!$nutrition){
+            return response()->json(['message' => 'Not found'], 404);
+        }
+        // Remove a imagem, se existir
+        if ($nutrition->image) {
+            Storage::disk('public')->delete($nutrition->image);
+        }
+
+        $nutrition->delete();
+
+        return response()->json([
+            'message' => 'Diet deleted successfully!'
+        ], 200);
     }
 }

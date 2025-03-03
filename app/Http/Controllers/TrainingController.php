@@ -175,16 +175,28 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        if ($training->user_id !== $user->id) {
+            return response()->json(['error' => 'Forbidden'], 403);
+        }
+
         if(!$training){
-            return response()->json([
-                'message' => 'Treino não encontrado!'
-            ], 404);
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        if ($training->image) {
+            Storage::disk('public')->delete($training->image);
         }
 
         $training->delete();
 
         return response()->json([
-            'message' => 'Treino excluído com sucesso!'
+            'message' => 'Workout deleted successfully!'
         ], 200);
     }
 }

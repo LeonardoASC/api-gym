@@ -90,14 +90,12 @@ if ($request->hasFile('image')) {
      */
     public function update(UpdateNutritionRequest $request, Nutrition $nutrition)
     {
-
         $user = auth()->user();
 
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // Verifica se o usuário é dono do recurso
         if ($nutrition->user_id !== $user->id) {
             return response()->json(['error' => 'Forbidden'], 403);
         }

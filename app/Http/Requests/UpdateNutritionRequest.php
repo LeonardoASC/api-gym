@@ -22,17 +22,18 @@ class UpdateNutritionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mealName' => 'string',
-            'description' => 'string',
-            'mealTime' => 'string',
-            'ingredients' => 'string',
-            'prepTime' => 'string',
-            'mealType' => 'string',
-            'recipe' => 'string',
-            'difficulty' => 'string',
-            'benefits' => 'string',
-            'portionSize' => 'string',
-            'image' => 'file|mimes:jpeg,png,jpg|max:2048',
+            'mealName' => 'required|string|min:1|max:100', 
+            'mealTime' => 'required|date_format:H:i', 
+            'ingredients' => 'required|string|min:1|max:500', 
+            'mealType' => 'required|string|min:1|max:50', 
+            'portionSize' => 'required|string|min:1|max:50', 
+            
+            'description' => 'nullable|string|max:255',
+            'prepTime' => 'nullable|integer|min:1|max:1440',
+            'recipe' => 'nullable|string|max:1000',
+            'difficulty' => 'nullable|string|min:3|max:50', 
+            'benefits' => 'nullable|string|max:500',
+            'image' => 'nullable',
         ];
     }
 }

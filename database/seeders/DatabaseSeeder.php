@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FrequenceSeeder::class);
         $this->call(NutritionSeeder::class);
         $this->call(TrainingLogSeeder::class);
+        $this->call(UserProfileSeeder::class);
     }
 }

@@ -63,18 +63,14 @@ class User extends Authenticatable implements JWTSubject
 
     public function gyms()
     {
-        return $this->hasMany(Gym::class, 'user_id'); // Academias administradas
+        return $this->hasMany(Gym::class, 'user_id'); 
     }
 
-    public function physicalEvaluations()
+    public function profile()
     {
-        return $this->hasMany(PhysicalEvaluation::class);
+        return $this->hasOne(UserProfile::class);
     }
-    public function payments()
-    {
-        return $this->hasMany(Payment::class, 'user_id', 'id');
-    }
-// relacionamento com o modelo de Nutrition
+
     public function nutritions()
     {
         return $this->hasMany(Nutrition::class);
